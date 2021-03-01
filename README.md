@@ -1,0 +1,2 @@
+# XieChenProject
+net core
