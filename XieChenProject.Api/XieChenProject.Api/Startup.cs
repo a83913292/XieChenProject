@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using XieChenProject.Api.Database;
+using XieChenProject.Api.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace XieChenProject.Api
 {
@@ -17,6 +20,13 @@ namespace XieChenProject.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();//注册api controllers 组件
+            services.AddTransient<ITouristRouteRepository, MockTouristRouteReository>();  //每次请求 创建全新的数据仓库
+            //services.AddSingleton  只创建一个数据创库
+            //services.AddScoped   
+
+            services.AddDbContext<AppDbContext>(option=> {
+                option.UseSqlServer("server=1.142.424.24;DateBase=XiechengDB;User Id=sa;Passworld=!Q@W3e4r5t6y");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
