@@ -25,7 +25,7 @@ namespace XieChenProject.Api
             //services.AddScoped   
 
             services.AddDbContext<AppDbContext>(option=> {
-                option.UseSqlServer("server=1.142.424.24;DateBase=XiechengDB;User Id=sa;Passworld=!Q@W3e4r5t6y");
+                option.UseSqlServer("Server=1.15.81.57;Database=Test;User Id=sa;Password=!Q@W3e4r5t6y");
             });
         }
 
