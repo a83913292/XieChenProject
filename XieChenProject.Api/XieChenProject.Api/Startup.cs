@@ -10,22 +10,32 @@ using Microsoft.Extensions.Hosting;
 using XieChenProject.Api.Database;
 using XieChenProject.Api.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace XieChenProject.Api
 {
     public class Startup
     {
+        public IConfiguration Configuration;
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();//注册api controllers 组件
-            services.AddTransient<ITouristRouteRepository, MockTouristRouteReository>();  //每次请求 创建全新的数据仓库
-            //services.AddSingleton  只创建一个数据创库
-            //services.AddScoped   
+            services.AddTransient<ITouristRouteRepository, ToristRouteRepository>();  //每次请求 创建全新的数据仓库
+                                                                                          //services.AddSingleton  只创建一个数据创库
+                                                                                          //services.AddScoped   
+
 
             services.AddDbContext<AppDbContext>(option=> {
-                option.UseSqlServer("Server=1.15.81.57;Database=Test;User Id=sa;Password=!Q@W3e4r5t6y");
+                //option.UseSqlServer("Server=localhost;Database=XieChengDB;User Id=sa;Password=!Q@W3e4r5t6y");
+                option.UseSqlServer(Configuration["DbContext:ConnectionString"]);
             });
         }
 
