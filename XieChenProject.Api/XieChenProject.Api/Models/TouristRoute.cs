@@ -37,5 +37,11 @@ namespace XieChenProject.Api.Models
         public ICollection<TouristRoutePicture> TouristRoutePictures { get; set; }
           = new List<TouristRoutePicture>();
 
+        public double? Rating { get; set; }
+
+        public TravelDays? TravelDays { get; set; }
+
+
+
     }
 }
