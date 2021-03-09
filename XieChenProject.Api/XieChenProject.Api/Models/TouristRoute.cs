@@ -17,9 +17,9 @@ namespace XieChenProject.Api.Models
         [Required]
         [MaxLength(1500)]
         public string Description { get; set; }
-        [Column(TypeName="decimal(18,2)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal OriginalPrice { get; set; }
-        [Range(0.0,1.0)]
+        [Range(0.0, 1.0)]
         public double? DiscountPresent { get; set; }
 
         public DateTime CreateTime { get; set; }
@@ -40,6 +40,12 @@ namespace XieChenProject.Api.Models
         public double? Rating { get; set; }
 
         public TravelDays? TravelDays { get; set; }
+
+        public TripType? TripType { get; set; }
+
+        public DepartureCity? DepartureCity { get; set; }
+
+
 
 
 

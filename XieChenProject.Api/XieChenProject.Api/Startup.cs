@@ -11,6 +11,7 @@ using XieChenProject.Api.Database;
 using XieChenProject.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace XieChenProject.Api
 {
@@ -27,16 +28,23 @@ namespace XieChenProject.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();//注册api controllers 组件
+            services.AddControllers(setupAction =>   //注册api controllers 组件
+            {
+                setupAction.ReturnHttpNotAcceptable = true;
+                //setupAction.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+            }).AddXmlDataContractSerializerFormatters(); //配置xml 
             services.AddTransient<ITouristRouteRepository, ToristRouteRepository>();  //每次请求 创建全新的数据仓库
                                                                                           //services.AddSingleton  只创建一个数据创库
                                                                                           //services.AddScoped   
+       
 
 
             services.AddDbContext<AppDbContext>(option=> {
                 //option.UseSqlServer("Server=localhost;Database=XieChengDB;User Id=sa;Password=!Q@W3e4r5t6y");
                 option.UseSqlServer(Configuration["DbContext:ConnectionString"]);
             });
+            //扫描profile文件
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
